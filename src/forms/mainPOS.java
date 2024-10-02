@@ -21,6 +21,7 @@ public class mainPOS extends javax.swing.JFrame {
     public static String accID;
     public static String busDate;
     public static String idClerk;
+    public static String businessDate;
 
     public mainPOS() {
         initComponents();

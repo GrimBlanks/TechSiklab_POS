@@ -12,7 +12,9 @@ import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.logging.Level;
+import javax.swing.JOptionPane;
 import notification.Notification;
+import posConfig.posConfig;
 
 /**
  *
@@ -23,11 +25,23 @@ public class loginForm extends javax.swing.JFrame {
     coreClass core = new coreClass();
     logging logs = new logging();
     transactionClass transCreate = new transactionClass();
+    posConfig posCon = new posConfig();
 
     public loginForm() {
         initComponents();
         loginBtn.setRippleColor(new Color(255, 255, 255));
         getContentPane().setBackground(new Color(204, 243, 255));
+
+        if (core.isWorkstationRegistered()) {
+            if (!core.getLastSignedOn().isBlank()) {
+                username.setText(core.getLastSignedOn());
+                username.disable();
+                comment.setText("Please sign off the current user.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Workstation is not yet registered. Please contact administrator.");
+            System.exit(0);
+        }
     }
 
     /**
@@ -49,6 +63,7 @@ public class loginForm extends javax.swing.JFrame {
         password = new UI.PasswordField();
         loginBtn = new UI.Button();
         jLabel4 = new javax.swing.JLabel();
+        comment = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -132,33 +147,43 @@ public class loginForm extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("LOGIN TO POS");
 
+        comment.setForeground(new java.awt.Color(255, 255, 255));
+        comment.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
         panelRound1Layout.setHorizontalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(password, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(username, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRound1Layout.createSequentialGroup()
-                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
             .addGroup(panelRound1Layout.createSequentialGroup()
-                .addGap(107, 107, 107)
-                .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(password, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(username, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRound1Layout.createSequentialGroup()
+                                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(panelRound1Layout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 104, Short.MAX_VALUE))
+                    .addGroup(panelRound1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(comment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRound1Layout.createSequentialGroup()
-                .addContainerGap(80, Short.MAX_VALUE)
+                .addGap(48, 48, 48)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comment, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,18 +222,18 @@ public class loginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtnActionPerformed
-        login();
+        login(username.getText(), password.getText());
     }//GEN-LAST:event_loginBtnActionPerformed
 
     private void usernameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            login();
+            login(username.getText(), password.getText());
         }
     }//GEN-LAST:event_usernameKeyReleased
 
     private void passwordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordKeyReleased
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            login();
+            login(username.getText(), password.getText());
         }
     }//GEN-LAST:event_passwordKeyReleased
 
@@ -248,46 +273,61 @@ public class loginForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel comment;
     private UI.ImageAvatar imageAvatar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private UI.Button loginBtn;
+    private UI.Button loginBtn1;
     private UI.PanelRound panelRound1;
     private UI.PanelRound panelRound2;
+    private UI.PanelRound panelRound3;
     private UI.PasswordField password;
+    private UI.PasswordField password1;
     private UI.TextField username;
+    private UI.TextField username1;
     // End of variables declaration//GEN-END:variables
 
-    private void login() {
+    private void login(String userName, String pass) {
         Notification panel = new Notification(this, null, Notification.Location.TOP_CENTER, "");
         Thread t = new Thread() {
             @Override
             public void run() {
                 try {
                     logs.setupLogger();
-                    if (core.login(username.getText(), password.getText())) {
-                        sleep(500);
-                        mainPOS.cashName = core.getCashierName();
-                        mainPOS.accID = core.getAccountID();
-                        if (core.checkIfSignedOn(core.getAccountID())) {
-                            new mainPOS().setVisible(true);
-                            transCreate.createLoginLogOutTrans("Login", core.getAccountID());
-                        } else {
-                            new busDateForm().setVisible(true);
-                            transCreate.createLoginLogOutTrans("Login", core.getAccountID());
-                        }
-                        dispose();
-                    } else {
-                        panel.setType(Notification.Type.WARNING);
-                        panel.setMessage("Invalid Credentials. Please try again.");
-                        panel.showNotification();
-                        password.setText("");
+
+                    String workstationSignedOn = core.checkIfSignedOn(userName);
+
+                    if (!workstationSignedOn.equalsIgnoreCase("" + posCon.getPosNumber()) && !workstationSignedOn.equalsIgnoreCase("0")) {
+                        JOptionPane.showMessageDialog(null, "You are logged on to workstation " + workstationSignedOn + ". Please sign off first on that workstation.");
                         username.setText("");
-                        username.requestFocus();
+                        password.setText("");
+                    } else {
+                        if (core.login(userName, pass)) {
+                            sleep(500);
+                            mainPOS.cashName = core.getCashierName();
+                            mainPOS.accID = core.getAccountID();
+                            System.out.println("Logged in");
+//                            new mainPOS().setVisible(true);
+//                            transCreate.createLoginLogOutTrans("Login", core.getAccountID());
+//                            new busDateForm().setVisible(true);
+//                            transCreate.createLoginLogOutTrans("Login", core.getAccountID());
+                        } else {
+                            panel.setType(Notification.Type.WARNING);
+                            panel.setMessage("Invalid Credentials. Please try again.");
+                            panel.showNotification();
+                            password.setText("");
+                            username.setText("");
+                            username.requestFocus();
+                        }
                     }
-                } catch (HeadlessException | IOException | InterruptedException e) {
+
+                } catch (Exception e) {
                     logs.logger.log(Level.SEVERE, "An exception error occured: ", e);
                 }
             }

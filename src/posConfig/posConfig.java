@@ -4,19 +4,15 @@
  */
 package posConfig;
 
-import java.io.File;
-import java.util.logging.FileHandler;
-
 /**
  *
  * @author MIS
  */
 public class posConfig {
 
-    public static final int storeID = 1;
-    public static final int posNumber = 1;
-    public static String busDate = "";
-    private String path = "src/posConfig/";
+    private final int storeID = 1;
+    private final int posNumber = 2;
+    private String busDate = "";
 
     public int getPosNumber() {
         return posNumber;
@@ -24,5 +20,13 @@ public class posConfig {
 
     public int getStoreID() {
         return storeID;
+    }
+
+    public void setBusDate(String date) {
+        busDate = date;
+    }
+
+    public String getBusDate() {
+        return busDate;
     }
 }

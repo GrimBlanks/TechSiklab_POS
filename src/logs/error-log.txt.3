@@ -1672,3 +1672,102 @@ java.sql.SQLException: Operation not allowed after ResultSet closed
 	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101)
 	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
 
+Oct 02, 2024 4:58:41 PM classes.databaseCore getResultSet
+SEVERE: An exception occurred
+java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'accountID = '1' AND ad.dateSignedOn IS NOT NULL AND ad.signedOnTo = 0 AND ah.del' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1200)
+	at classes.databaseCore.getResultSet(databaseCore.java:47)
+	at classes.coreClass.checkIfSignedOn(coreClass.java:170)
+	at forms.loginForm$5.run(loginForm.java:300)
+
+Oct 02, 2024 4:58:41 PM classes.coreClass checkIfSignedOn
+SEVERE: An exception occurred
+java.sql.SQLException: Operation not allowed after ResultSet closed
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:98)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:90)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:64)
+	at com.mysql.cj.jdbc.result.ResultSetImpl.checkClosed(ResultSetImpl.java:485)
+	at com.mysql.cj.jdbc.result.ResultSetImpl.next(ResultSetImpl.java:1802)
+	at classes.coreClass.checkIfSignedOn(coreClass.java:171)
+	at forms.loginForm$5.run(loginForm.java:300)
+
+Oct 02, 2024 5:01:02 PM classes.databaseCore getResultSet
+SEVERE: An exception occurred
+java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ah.accountID = '1' AND ad.dateSignedOn IS NOT NULL AND ad.signedOnTo = 0 AND ah.' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1200)
+	at classes.databaseCore.getResultSet(databaseCore.java:47)
+	at classes.coreClass.checkIfSignedOn(coreClass.java:170)
+	at forms.loginForm$5.run(loginForm.java:300)
+
+Oct 02, 2024 5:01:02 PM classes.coreClass checkIfSignedOn
+SEVERE: An exception occurred
+java.sql.SQLException: Operation not allowed after ResultSet closed
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:98)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:90)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:64)
+	at com.mysql.cj.jdbc.result.ResultSetImpl.checkClosed(ResultSetImpl.java:485)
+	at com.mysql.cj.jdbc.result.ResultSetImpl.next(ResultSetImpl.java:1802)
+	at classes.coreClass.checkIfSignedOn(coreClass.java:171)
+	at forms.loginForm$5.run(loginForm.java:300)
+
+Oct 02, 2024 8:46:49 PM classes.databaseCore getResultSet
+SEVERE: An exception occurred
+java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ah.deletedOn IS NULL' at line 1
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1200)
+	at classes.databaseCore.getResultSet(databaseCore.java:47)
+	at classes.coreClass.checkIfSignedOn(coreClass.java:169)
+	at forms.loginForm$5.run(loginForm.java:300)
+
+Oct 02, 2024 8:46:49 PM classes.coreClass checkIfSignedOn
+SEVERE: An exception occurred
+java.sql.SQLException: Operation not allowed after ResultSet closed
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:98)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:90)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:64)
+	at com.mysql.cj.jdbc.result.ResultSetImpl.checkClosed(ResultSetImpl.java:485)
+	at com.mysql.cj.jdbc.result.ResultSetImpl.next(ResultSetImpl.java:1802)
+	at classes.coreClass.checkIfSignedOn(coreClass.java:170)
+	at forms.loginForm$5.run(loginForm.java:300)
+
+Oct 02, 2024 9:02:02 PM classes.databaseCore execute
+SEVERE: An exception occurred
+java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`cl_posmain`.`transheader`, CONSTRAINT `workstationNumber` FOREIGN KEY (`workstationNumber`) REFERENCES `workstationheader` (`workstationNumber`))
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeInternal(StatementImpl.java:763)
+	at com.mysql.cj.jdbc.StatementImpl.execute(StatementImpl.java:648)
+	at classes.databaseCore.execute(databaseCore.java:57)
+	at classes.transactionClass.createLoginLogOutTrans(transactionClass.java:34)
+	at forms.loginForm$5.run(loginForm.java:305)
+
+Oct 02, 2024 9:38:19 PM classes.databaseCore getResultSet
+SEVERE: An exception occurred
+java.sql.SQLSyntaxErrorException: Unknown column 'workstationNumber' in 'where clause'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at com.mysql.cj.jdbc.StatementImpl.executeQuery(StatementImpl.java:1200)
+	at classes.databaseCore.getResultSet(databaseCore.java:47)
+	at classes.coreClass.checkIfSignedOn(coreClass.java:184)
+	at forms.loginForm$5.run(loginForm.java:304)
+
+Oct 02, 2024 9:38:19 PM classes.coreClass checkIfSignedOn
+SEVERE: An exception occurred
+java.sql.SQLException: Operation not allowed after ResultSet closed
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:130)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:98)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:90)
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:64)
+	at com.mysql.cj.jdbc.result.ResultSetImpl.checkClosed(ResultSetImpl.java:485)
+	at com.mysql.cj.jdbc.result.ResultSetImpl.next(ResultSetImpl.java:1802)
+	at classes.coreClass.checkIfSignedOn(coreClass.java:185)
+	at forms.loginForm$5.run(loginForm.java:304)
+

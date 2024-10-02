@@ -4,6 +4,7 @@
  */
 package classes;
 
+import forms.mainPOS;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,6 +26,7 @@ public class coreClass {
     String employeeID = null;
     String accountID = null;
     
+
     public boolean login(String username, String password) {
         boolean res = false;
         try {
@@ -133,6 +135,19 @@ public class coreClass {
         }
     }
 
+    public void setSignedOff(String accountID, String times, String dates) {
+        try {
+            logs.setupLogger();
+            String query = "UPDATE accountdetail "
+                    + "SET signedOnTo = 0, dateSignedOff = '" + dates + "', timeSignedOn = '" + times + "' "
+                    + "WHERE accountID = '" + accountID + "'";
+            dbCore.executeUpdate(query);
+            dbCore.closeConnection();
+        } catch (Exception e) {
+            logs.logger.log(Level.SEVERE, "An exception occurred", e);
+        }
+    }
+
     public void setAccountID(String accID) {
         accountID = accID;
     }
@@ -153,18 +168,22 @@ public class coreClass {
         this.employeeID = employeeID;
     }
 
-    public boolean checkIfSignedOn(String accountID) {
-        boolean isSignedOn = false;
+    public String checkIfSignedOn(String username) {
+        String isSignedOn = "0";
 
         try {
             logs.setupLogger();
             String query = "SELECT * "
-                    + "FROM accountdetail "
-                    + "WHERE accountID = '" + accountID + "' AND dateSignedOn IS NOT NULL AND signedOnTo = 0";
+                    + "FROM accountdetail ad "
+                    + "JOIN accountheader ah "
+                    + "ON ah.accountID = ad.accountID "
+                    + "WHERE ah.deletedOn IS NULL "
+                    + "AND ad.userName = '" + username + "' "
+                    + "AND signedOnTo != 0";
             dbCore.setQuery(query);
             rs = dbCore.getResultSet();
             if (rs.next()) {
-                isSignedOn = true;
+                isSignedOn = rs.getString("ad.signedOnTo");
             }
             rs.close();
             dbCore.closeConnection();
@@ -172,5 +191,50 @@ public class coreClass {
             logs.logger.log(Level.SEVERE, "An exception occurred", e);
         }
         return isSignedOn;
+    }
+
+    public String getLastSignedOn() {
+        String accID = "";
+        try {
+            logs.setupLogger();
+            String query = "SELECT * "
+                    + "FROM accountdetail ad "
+                    + "JOIN accountheader ah "
+                    + "ON ad.accountID = ah.accountID "
+                    + "WHERE ad.signedOnTo = " + posCon.getPosNumber() + " "
+                    + "AND ah.deletedOn IS NULL";
+            dbCore.setQuery(query);
+            rs = dbCore.getResultSet();
+            if (rs.next()) {
+                accID = rs.getString("userName");
+            }
+            rs.close();
+            dbCore.closeConnection();
+        } catch (Exception e) {
+            logs.logger.log(Level.SEVERE, "An exception occurred", e);
+        }
+        return accID;
+    }
+
+    public boolean isWorkstationRegistered() {
+        boolean isRegistered = false;
+        try {
+            logs.setupLogger();
+            String query = "SELECT * "
+                    + "FROM workstationheader "
+                    + "WHERE workstationNumber = " + posCon.getPosNumber() + " "
+                    + "AND storeID = " + posCon.getStoreID() + " "
+                    + "AND deletedOn IS NULL";
+            dbCore.setQuery(query);
+            rs = dbCore.getResultSet();
+            if (rs.next()) {
+                isRegistered = true;
+            }
+            rs.close();
+            dbCore.closeConnection();
+        } catch (Exception e) {
+            logs.logger.log(Level.SEVERE, "An exception occurred", e);
+        }
+        return isRegistered;
     }
 }
