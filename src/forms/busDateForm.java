@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 import notification.Notification;
+import posConfig.posConfig;
 
 /**
  *
@@ -162,7 +163,7 @@ public class busDateForm extends javax.swing.JFrame {
 
             // Print the result
             // System.out.println(formattedDate); // Output: 2024-09-17
-            mainPOS.busDate = bzdate.getText();
+            posConfig.busDate = bzdate.getText();
             new mainPOS().setVisible(true);
             dispose();
         } catch (DateTimeParseException e) {

@@ -102,9 +102,7 @@ public class coreClass {
             SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd");
             String query = "SELECT COUNT(*) transNumber FROM transheader th "
                     + "WHERE th.storeID = '" + posCon.getStoreID() + "' "
-                    + "AND th.workstationNumber = '" + posCon.getPosNumber() + "' "
-                    + "AND th.transDate = '" + sdf.format(new Date()) + "' "
-                    + "AND th.accID = '" + accountID + "'";
+                    + "AND th.workstationNumber = '" + posCon.getPosNumber() + "' ";
             dbCore.setQuery(query);
             rs = dbCore.getResultSet();
             if (rs.next()) {

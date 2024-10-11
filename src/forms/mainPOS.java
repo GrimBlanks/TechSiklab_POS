@@ -19,7 +19,6 @@ public class mainPOS extends javax.swing.JFrame {
     coreClass core = new coreClass();
     public static String cashName;
     public static String accID;
-    public static String busDate;
     public static String idClerk;
     public static String businessDate;
 
@@ -30,7 +29,7 @@ public class mainPOS extends javax.swing.JFrame {
         TansNo.setText("" + (core.getTransNo(accID) + 1));
         SimpleDateFormat sdf = new SimpleDateFormat("MMMMMM dd, YYYY");
         dateToday.setText(sdf.format(new java.util.Date()));
-//        bzDate.setText(busDate);
+        bzDate.setText(businessDate);
         TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
 
 //        if (!bzDate.getText().trim().equalsIgnoreCase(dateToday.getText().trim())) {
@@ -94,7 +93,7 @@ public class mainPOS extends javax.swing.JFrame {
         multiPurInField = new UI.TextField();
         loginBtn13 = new UI.Button();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {

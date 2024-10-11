@@ -11,8 +11,8 @@ package posConfig;
 public class posConfig {
 
     private final int storeID = 1;
-    private final int posNumber = 2;
-    private String busDate = "";
+    private final int posNumber = 1;
+    public static String busDate = "";
 
     public int getPosNumber() {
         return posNumber;

@@ -19,7 +19,7 @@ public class transactionClass {
     posConfig posCon = new posConfig();
     coreClass core = new coreClass();
 
-    public void createLoginLogOutTrans(String transType, String accountID) {
+    public void createTransHeader(String transType, String accountID) {
         try {
             logs.setupLogger();
             String tranNo = "" + (core.getTransNo(accountID) + 1);

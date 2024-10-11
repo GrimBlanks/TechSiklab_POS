@@ -308,15 +308,17 @@ public class loginForm extends javax.swing.JFrame {
                         username.setText("");
                         password.setText("");
                     } else {
+                        mainPOS.cashName = core.getCashierName();
+                        mainPOS.accID = core.getAccountID();
                         if (core.login(userName, pass)) {
                             sleep(500);
-                            mainPOS.cashName = core.getCashierName();
-                            mainPOS.accID = core.getAccountID();
-                            System.out.println("Logged in");
-//                            new mainPOS().setVisible(true);
-//                            transCreate.createLoginLogOutTrans("Login", core.getAccountID());
-//                            new busDateForm().setVisible(true);
-//                            transCreate.createLoginLogOutTrans("Login", core.getAccountID());
+                            if (posCon.getBusDate().isEmpty()) {
+                                new busDateForm().setVisible(true);
+                                dispose();
+                            } else {
+                                new mainPOS().setVisible(true);
+                                dispose();
+                            }
                         } else {
                             panel.setType(Notification.Type.WARNING);
                             panel.setMessage("Invalid Credentials. Please try again.");
@@ -326,7 +328,6 @@ public class loginForm extends javax.swing.JFrame {
                             username.requestFocus();
                         }
                     }
-
                 } catch (Exception e) {
                     logs.logger.log(Level.SEVERE, "An exception error occured: ", e);
                 }
