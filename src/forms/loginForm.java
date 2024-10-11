@@ -8,9 +8,7 @@ import classes.coreClass;
 import classes.logging;
 import classes.transactionClass;
 import java.awt.Color;
-import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import notification.Notification;
@@ -265,10 +263,8 @@ public class loginForm extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new loginForm().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new loginForm().setVisible(true);
         });
     }
 
@@ -308,16 +304,23 @@ public class loginForm extends javax.swing.JFrame {
                         username.setText("");
                         password.setText("");
                     } else {
-                        mainPOS.cashName = core.getCashierName();
-                        mainPOS.accID = core.getAccountID();
                         if (core.login(userName, pass)) {
+                            String busDate = posCon.getBusDate(core.getAccountID());
+                            mainPOS.cashName = core.getCashierName();
+                            mainPOS.accID = core.getAccountID();
+                            System.out.println(busDate);
                             sleep(500);
-                            if (posCon.getBusDate().isEmpty()) {
-                                new busDateForm().setVisible(true);
-                                dispose();
-                            } else {
-                                new mainPOS().setVisible(true);
-                                dispose();
+                            try {
+                                if (busDate.isEmpty() || busDate.isBlank()) {
+                                    new busDateForm().setVisible(true);
+                                    dispose();
+                                } else {
+                                    mainPOS.businessDate = busDate;
+                                    new mainPOS().setVisible(true);
+                                    dispose();  
+                                }
+                            } catch (Exception e) {
+                                logs.logger.log(Level.SEVERE, "An exception error occured: ", e);
                             }
                         } else {
                             panel.setType(Notification.Type.WARNING);

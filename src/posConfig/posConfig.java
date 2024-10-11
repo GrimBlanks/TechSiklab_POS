@@ -4,6 +4,10 @@
  */
 package posConfig;
 
+import classes.databaseCore;
+import classes.logging;
+import java.sql.*;
+
 /**
  *
  * @author MIS
@@ -11,8 +15,10 @@ package posConfig;
 public class posConfig {
 
     private final int storeID = 1;
-    private final int posNumber = 1;
-    public static String busDate = "";
+    private final int posNumber = 2;
+    logging logs = new logging();
+    databaseCore dbCore = new databaseCore();
+    ResultSet rs;
 
     public int getPosNumber() {
         return posNumber;
@@ -22,11 +28,29 @@ public class posConfig {
         return storeID;
     }
 
-    public void setBusDate(String date) {
-        busDate = date;
-    }
 
-    public String getBusDate() {
+    public String getBusDate(String accountID) {
+        String busDate = "";
+
+        try {
+            logs.setupLogger();
+            String query = "SELECT * "
+                    + "FROM accountdetail ad "
+                    + "JOIN accountheader ah "
+                    + "ON ah.accountID = ad.accountID "
+                    + "WHERE ah.deletedOn IS NULL "
+                    + "AND ad.accountID = '" + accountID + "' ";
+            dbCore.setQuery(query);
+            rs = dbCore.getResultSet();
+            if (rs.next()) {
+                busDate = rs.getString("ad.businessDate");
+            }
+            rs.close();
+            dbCore.closeConnection();
+        } catch (Exception e) {
+            logs.logger.log(java.util.logging.Level.SEVERE, "An exception occurred", e);
+        }
+
         return busDate;
     }
 }
