@@ -7,8 +7,11 @@ package forms;
 import UI.Button;
 import UI.TableCustom;
 import classes.coreClass;
+import classes.transactionClass;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,6 +24,8 @@ public class mainPOS extends javax.swing.JFrame {
     public static String accID;
     public static String idClerk;
     public static String businessDate;
+    transactionClass transCreate = new transactionClass();
+    Thread t;
 
     public mainPOS() {
         initComponents();
@@ -32,10 +37,28 @@ public class mainPOS extends javax.swing.JFrame {
         bzDate.setText(businessDate);
         TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
 
-//        if (!bzDate.getText().trim().equalsIgnoreCase(dateToday.getText().trim())) {
-//            bzDate.setForeground(Color.red);
-//        }
 //        setExtendedState(MAXIMIZED_BOTH);
+        t = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!dateToday.getText().equals(bzDate.getText())) {
+                        // Set the color to red
+                        bzDate.setForeground(Color.RED);
+                        bzDate.repaint(); // Refresh the label
+                        Thread.sleep(1000); // Sleep for 1 second
+
+                        // Set the color to white
+                        bzDate.setForeground(Color.WHITE);
+                        bzDate.repaint(); // Refresh the label
+                        Thread.sleep(1000); // Sleep for 1 second
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error");
+                }
+            }
+        };
+        t.start();
     }
 
     /**
@@ -100,6 +123,11 @@ public class mainPOS extends javax.swing.JFrame {
                 formWindowGainedFocus(evt);
             }
             public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            }
+        });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
@@ -739,6 +767,10 @@ public class mainPOS extends javax.swing.JFrame {
     private void loginBtn12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtn12ActionPerformed
         new optionsForm().setVisible(true);
     }//GEN-LAST:event_loginBtn12ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        transCreate.createTransHeader("Logout", accID);
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

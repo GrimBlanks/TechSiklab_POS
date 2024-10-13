@@ -8,7 +8,11 @@ import classes.coreClass;
 import classes.logging;
 import classes.transactionClass;
 import java.awt.Color;
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import notification.Notification;
@@ -34,7 +38,7 @@ public class loginForm extends javax.swing.JFrame {
             if (!core.getLastSignedOn().isBlank()) {
                 username.setText(core.getLastSignedOn());
                 username.disable();
-                comment.setText("Please sign off the current user.");
+                comment.setText("<html><center>Please sign off the current user. <br>Or you may continue.</center></html>");
             }
         } else {
             JOptionPane.showMessageDialog(null, "Workstation is not yet registered. Please contact administrator.");
@@ -99,7 +103,7 @@ public class loginForm extends javax.swing.JFrame {
                 .addComponent(imageAvatar1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         panelRound1.setBackground(new java.awt.Color(71, 149, 229));
@@ -134,6 +138,14 @@ public class loginForm extends javax.swing.JFrame {
         loginBtn.setForeground(new java.awt.Color(255, 255, 255));
         loginBtn.setText("LOGIN");
         loginBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        loginBtn.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                loginBtnFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                loginBtnFocusLost(evt);
+            }
+        });
         loginBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 loginBtnActionPerformed(evt);
@@ -145,6 +157,7 @@ public class loginForm extends javax.swing.JFrame {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("LOGIN TO POS");
 
+        comment.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         comment.setForeground(new java.awt.Color(255, 255, 255));
         comment.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
@@ -168,7 +181,7 @@ public class loginForm extends javax.swing.JFrame {
                     .addGroup(panelRound1Layout.createSequentialGroup()
                         .addGap(107, 107, 107)
                         .addComponent(loginBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 104, Short.MAX_VALUE))
+                        .addGap(0, 128, Short.MAX_VALUE))
                     .addGroup(panelRound1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(comment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -180,7 +193,7 @@ public class loginForm extends javax.swing.JFrame {
                 .addGap(48, 48, 48)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comment, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                .addComponent(comment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -201,18 +214,18 @@ public class loginForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(panelRound2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -234,6 +247,14 @@ public class loginForm extends javax.swing.JFrame {
             login(username.getText(), password.getText());
         }
     }//GEN-LAST:event_passwordKeyReleased
+
+    private void loginBtnFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginBtnFocusGained
+        loginBtn.setBackground(Color.red);
+    }//GEN-LAST:event_loginBtnFocusGained
+
+    private void loginBtnFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_loginBtnFocusLost
+        loginBtn.setBackground(new Color(209, 111, 111));
+    }//GEN-LAST:event_loginBtnFocusLost
 
     /**
      * @param args the command line arguments
@@ -275,18 +296,11 @@ public class loginForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private UI.Button loginBtn;
-    private UI.Button loginBtn1;
     private UI.PanelRound panelRound1;
     private UI.PanelRound panelRound2;
-    private UI.PanelRound panelRound3;
     private UI.PasswordField password;
-    private UI.PasswordField password1;
     private UI.TextField username;
-    private UI.TextField username1;
     // End of variables declaration//GEN-END:variables
 
     private void login(String userName, String pass) {
@@ -308,16 +322,25 @@ public class loginForm extends javax.swing.JFrame {
                             String busDate = posCon.getBusDate(core.getAccountID());
                             mainPOS.cashName = core.getCashierName();
                             mainPOS.accID = core.getAccountID();
-                            System.out.println(busDate);
                             sleep(500);
                             try {
                                 if (busDate.isEmpty() || busDate.isBlank()) {
                                     new busDateForm().setVisible(true);
                                     dispose();
                                 } else {
-                                    mainPOS.businessDate = busDate;
+                                    // Parse the date
+                                    LocalDate date = LocalDate.parse(busDate);
+                                    
+                                    // Format the date to the desired output
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+                                    String formattedDate = date.format(formatter);
+                                    mainPOS.businessDate = formattedDate;
+
+                                    //Create a transaction record
+                                    transCreate.createTransHeader("Login", core.getAccountID());
+
                                     new mainPOS().setVisible(true);
-                                    dispose();  
+                                    dispose();
                                 }
                             } catch (Exception e) {
                                 logs.logger.log(Level.SEVERE, "An exception error occured: ", e);
@@ -331,7 +354,7 @@ public class loginForm extends javax.swing.JFrame {
                             username.requestFocus();
                         }
                     }
-                } catch (Exception e) {
+                } catch (HeadlessException | IOException | InterruptedException e) {
                     logs.logger.log(Level.SEVERE, "An exception error occured: ", e);
                 }
             }

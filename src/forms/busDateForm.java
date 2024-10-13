@@ -163,7 +163,7 @@ public class busDateForm extends javax.swing.JFrame {
 
             // Print the result
 //             System.out.println(formattedDate); // Output: 2024-09-17
-//            posConfig.busDate = bzdate.getText();
+            mainPOS.businessDate = bzdate.getText();
             new mainPOS().setVisible(true);
             dispose();
         } catch (DateTimeParseException e) {

@@ -23,7 +23,6 @@ public class coreClass {
     posConfig posCon = new posConfig();
     String employeeID = null;
     String accountID = null;
-    
 
     public boolean login(String username, String password) {
         boolean res = false;
@@ -34,7 +33,7 @@ public class coreClass {
                     + "JOIN accountdetail ad "
                     + "ON ah.accountID = ad.accountID "
                     + "WHERE ah.deletedOn IS NULL "
-                    + "AND userName = '" + username + "' AND password = SHA2('" + password + "', 256)";
+                    + "AND userName = '" + username + "' AND password = SHA2('" + password + "', 256) ";
             dbCore.setQuery(query);
             rs = dbCore.getResultSet();
             if (rs.next()) {
@@ -135,7 +134,7 @@ public class coreClass {
         try {
             logs.setupLogger();
             String query = "UPDATE accountdetail "
-                    + "SET signedOnTo = 0, dateSignedOff = '" + dates + "', timeSignedOn = '" + times + "' "
+                    + "SET signedOnTo = 0, dateSignedOff = '" + dates + "', timeSignedOff = '" + times + "' "
                     + "WHERE accountID = '" + accountID + "'";
             dbCore.executeUpdate(query);
             dbCore.closeConnection();
@@ -198,6 +197,7 @@ public class coreClass {
                     + "JOIN accountheader ah "
                     + "ON ad.accountID = ah.accountID "
                     + "WHERE ad.signedOnTo = " + posCon.getPosNumber() + " "
+                    + "AND ah.storeID = " + posCon.getStoreID() + " "
                     + "AND ah.deletedOn IS NULL";
             dbCore.setQuery(query);
             rs = dbCore.getResultSet();

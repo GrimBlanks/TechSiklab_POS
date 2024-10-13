@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package classes;
 
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import posConfig.posConfig;
 
-/**
- *
- * @author MIS
- */
 public class transactionClass {
 
     databaseCore dbCore = new databaseCore();
@@ -30,7 +22,11 @@ public class transactionClass {
             String query = "INSERT INTO transHeader (storeID, workstationNumber, businessDate, transDate, endTime, transNumber, transType, accID) "
                     + "VALUES('" + posCon.getStoreID() + "', '" + posCon.getPosNumber() + "', '" + dates + "', '" + dates + "', "
                     + "'" + times + "', '" + tranNo + "', '" + transType + "', '" + accountID + "')";
-            core.setSignedOn(accountID, times, dates);
+            if (transType.equalsIgnoreCase("Login")) {
+                core.setSignedOn(accountID, times, dates);
+            } else {
+                core.setSignedOff(accountID, times, dates);
+            }
             dbCore.execute(query);
             dbCore.closeConnection();
         } catch (Exception e) {
