@@ -5,8 +5,9 @@
         <group>
             <file>file:/C:/Users/office/Documents/NetBeansProjects/CodeLoom_POS/src/forms/loginForm.java</file>
             <file>file:/C:/Users/office/Documents/NetBeansProjects/CodeLoom_POS/src/forms/mainPOS.java</file>
-            <file>file:/C:/Users/office/Documents/NetBeansProjects/CodeLoom_POS/src/classes/logging.java</file>
-            <file>file:/C:/Users/office/Documents/NetBeansProjects/CodeLoom_POS/src/forms/busDateForm.java</file>
+            <file>file:/C:/Users/office/Documents/NetBeansProjects/CodeLoom_POS/src/forms/optionsForm.java</file>
+            <file>file:/C:/Users/office/Documents/NetBeansProjects/CodeLoom_POS/src/posConfig/posConfig.java</file>
+            <file>file:/C:/Users/office/Documents/NetBeansProjects/CodeLoom_POS/src/classes/databaseCore.java</file>
             <file>file:/C:/Users/office/Documents/NetBeansProjects/CodeLoom_POS/src/classes/transactionClass.java</file>
             <file>file:/C:/Users/office/Documents/NetBeansProjects/CodeLoom_POS/src/classes/coreClass.java</file>
         </group>
