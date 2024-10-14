@@ -44,6 +44,8 @@ public class loginForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Workstation is not yet registered. Please contact administrator.");
             System.exit(0);
         }
+        
+        //transCreate.createTransHeaderXML();
     }
 
     /**

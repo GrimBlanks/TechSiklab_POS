@@ -108,6 +108,10 @@ public class coreClass {
             } else {
                 finalTran = 0;
             }
+            
+            if(finalTran == 9999){
+                finalTran = 0;
+            }
             rs.close();
             dbCore.closeConnection();
         } catch (IOException | NumberFormatException | SQLException e) {

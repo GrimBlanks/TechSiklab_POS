@@ -116,7 +116,7 @@ public class mainPOS extends javax.swing.JFrame {
         multiPurInField = new UI.TextField();
         loginBtn13 = new UI.Button();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
@@ -769,7 +769,12 @@ public class mainPOS extends javax.swing.JFrame {
     }//GEN-LAST:event_loginBtn12ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        transCreate.createTransHeader("Logout", accID);
+        int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to sign off?", null, 0);
+        if (option == 0) {
+            transCreate.createTransHeader("Logout", accID);
+            dispose();
+            new loginForm().setVisible(true);
+        }
     }//GEN-LAST:event_formWindowClosing
 
     /**
