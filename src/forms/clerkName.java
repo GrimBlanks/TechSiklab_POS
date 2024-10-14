@@ -19,7 +19,7 @@ public class clerkName extends javax.swing.JFrame {
 
     public clerkName() {
         initComponents();
-        getContentPane().setBackground(Color.WHITE);
+        getContentPane().setBackground(new Color(110,193,243));
     }
 
     /**

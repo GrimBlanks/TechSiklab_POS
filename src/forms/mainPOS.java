@@ -24,6 +24,8 @@ public class mainPOS extends javax.swing.JFrame {
     public static String accID;
     public static String idClerk;
     public static String businessDate;
+    public static double cashierDeclareAmount;
+    public static boolean isDeclared = false;
     transactionClass transCreate = new transactionClass();
     Thread t;
 
@@ -37,7 +39,7 @@ public class mainPOS extends javax.swing.JFrame {
         bzDate.setText(businessDate);
         TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
 
-//        setExtendedState(MAXIMIZED_BOTH);
+        setExtendedState(MAXIMIZED_BOTH);
         t = new Thread() {
             @Override
             public void run() {
@@ -59,6 +61,26 @@ public class mainPOS extends javax.swing.JFrame {
             }
         };
         t.start();
+
+        Thread second = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        sleep(1000);
+                        if (isDeclared) {
+                            transCreate.createTransHeader("Declare", mainPOS.accID);
+                            dispose();
+                            new loginForm().setVisible(true);
+                            break;
+                        }
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error");
+                }
+            }
+        };
+        second.start();
     }
 
     /**
@@ -117,6 +139,7 @@ public class mainPOS extends javax.swing.JFrame {
         loginBtn13 = new UI.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setUndecorated(true);
         setResizable(false);
         addWindowFocusListener(new java.awt.event.WindowFocusListener() {
             public void windowGainedFocus(java.awt.event.WindowEvent evt) {
@@ -741,6 +764,10 @@ public class mainPOS extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_F1) {
             new clerkName().setVisible(true);
         }
+
+        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            logoutMethod();
+        }
     }//GEN-LAST:event_multiPurInFieldKeyReleased
 
     private void loginBtn13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtn13ActionPerformed
@@ -769,12 +796,7 @@ public class mainPOS extends javax.swing.JFrame {
     }//GEN-LAST:event_loginBtn12ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to sign off?", null, 0);
-        if (option == 0) {
-            transCreate.createTransHeader("Logout", accID);
-            dispose();
-            new loginForm().setVisible(true);
-        }
+        logoutMethod();
     }//GEN-LAST:event_formWindowClosing
 
     /**
@@ -863,5 +885,14 @@ public class mainPOS extends javax.swing.JFrame {
     private void numberTouchPad(Button btn) {
         multiPurInField.setText(multiPurInField.getText() + btn.getText());
         multiPurInField.requestFocus();
+    }
+
+    private void logoutMethod() {
+        int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to sign off?", null, 0);
+        if (option == 0) {
+            transCreate.createTransHeader("Logout", accID);
+            dispose();
+            new loginForm().setVisible(true);
+        }
     }
 }

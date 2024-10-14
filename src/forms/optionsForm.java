@@ -4,15 +4,17 @@
  */
 package forms;
 
+import classes.transactionClass;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author MIS
  */
 public class optionsForm extends javax.swing.JFrame {
 
-    /**
-     * Creates new form optionsForm
-     */
+    transactionClass tansCreate = new transactionClass();
+
     public optionsForm() {
         initComponents();
     }
@@ -62,7 +64,7 @@ public class optionsForm extends javax.swing.JFrame {
 
         loginBtn16.setBackground(new java.awt.Color(209, 111, 111));
         loginBtn16.setForeground(new java.awt.Color(255, 255, 255));
-        loginBtn16.setText("RETURN");
+        loginBtn16.setText("RETURN RECEIPT");
         loginBtn16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
         loginBtn17.setBackground(new java.awt.Color(209, 111, 111));
@@ -77,13 +79,18 @@ public class optionsForm extends javax.swing.JFrame {
 
         loginBtn19.setBackground(new java.awt.Color(209, 111, 111));
         loginBtn19.setForeground(new java.awt.Color(255, 255, 255));
-        loginBtn19.setText("ABORT RECEIPT");
+        loginBtn19.setText("PAYMENT METHOD");
         loginBtn19.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
 
         loginBtn20.setBackground(new java.awt.Color(209, 111, 111));
         loginBtn20.setForeground(new java.awt.Color(255, 255, 255));
-        loginBtn20.setText("PAYMENT METHOD");
-        loginBtn20.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        loginBtn20.setText("CASHIER DECLARATION");
+        loginBtn20.setFont(new java.awt.Font("Segoe UI", 1, 17)); // NOI18N
+        loginBtn20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loginBtn20ActionPerformed(evt);
+            }
+        });
 
         loginBtn21.setBackground(new java.awt.Color(209, 111, 111));
         loginBtn21.setForeground(new java.awt.Color(255, 255, 255));
@@ -147,6 +154,19 @@ public class optionsForm extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void loginBtn20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginBtn20ActionPerformed
+        try {
+            double a = Double.parseDouble(JOptionPane.showInputDialog("Please input declared amount", null));
+            transactionClass.amount = a;
+            mainPOS.isDeclared = true;
+            dispose();
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null, "Invalid input. Please try again.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_loginBtn20ActionPerformed
 
     /**
      * @param args the command line arguments

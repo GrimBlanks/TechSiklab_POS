@@ -108,8 +108,8 @@ public class coreClass {
             } else {
                 finalTran = 0;
             }
-            
-            if(finalTran == 9999){
+
+            if (finalTran == 9999) {
                 finalTran = 0;
             }
             rs.close();
@@ -236,5 +236,22 @@ public class coreClass {
             logs.logger.log(Level.SEVERE, "An exception occurred", e);
         }
         return isRegistered;
+    }
+
+    public void cashierDeclaration(String accountID, String date, String time, String tranNo, Double amount) {
+        try {
+            logs.setupLogger();
+            String query = "INSERT INTO cashierdeclaration (accountID, businessDate, declareDate, workstationNumber, transNumber, declarationTime, amount, storeID) "
+                    + "VALUES ('" + accountID + "', '" + posCon.getBusDate(accountID) + "', '" + date + "', "
+                    + "'" + posCon.getPosNumber() + "', '" + tranNo + "', '" + time + "', " + amount + ", '" + posCon.getStoreID() + "')";
+            dbCore.execute(query);
+            query = "UPDATE accountDetail "
+                    + "SET businessDate = ' ' "
+                    + "WHERE accountID = '" + accountID + "' ";
+            dbCore.executeUpdate(query);
+            dbCore.closeConnection();
+        } catch (Exception e) {
+            logs.logger.log(Level.SEVERE, "An exception occurred", e);
+        }
     }
 }

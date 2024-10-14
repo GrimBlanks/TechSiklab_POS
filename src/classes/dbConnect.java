@@ -8,8 +8,8 @@ public class dbConnect {
     static logging logs = new logging();
 
     // Database URL, username, and password
-    private static final String URL = "jdbc:mysql://localhost:3306/cl_posmain";
-    private static final String USER = "root";
+    private static final String URL = "jdbc:mysql://CL_POS_SERVER:3306/cl_posmain";
+    private static final String USER = "sa";
     private static final String PASSWORD = "tpdotnet";
     private static Connection connection = null;
 

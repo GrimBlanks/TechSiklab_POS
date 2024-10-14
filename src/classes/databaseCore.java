@@ -50,8 +50,8 @@ public class databaseCore {
         }
         return rs;
     }
-    
-    public void execute(String query){
+
+    public void execute(String query) {
         try {
             connect();
             st.execute(query);

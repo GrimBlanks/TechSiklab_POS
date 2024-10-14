@@ -12,7 +12,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 import notification.Notification;
-import posConfig.posConfig;
 
 /**
  *
@@ -22,7 +21,7 @@ public class busDateForm extends javax.swing.JFrame {
 
     public busDateForm() {
         initComponents();
-        getContentPane().setBackground(Color.WHITE);
+        getContentPane().setBackground(new Color(110,193,243));
         SimpleDateFormat sdf = new SimpleDateFormat("MMMMMM dd, YYYY");
         bzdate.setText(sdf.format(new Date()));
     }
@@ -42,6 +41,7 @@ public class busDateForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setAlwaysOnTop(true);
+        setBackground(new java.awt.Color(110, 193, 243));
         setUndecorated(true);
         setResizable(false);
 

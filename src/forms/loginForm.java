@@ -17,7 +17,6 @@ import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import notification.Notification;
 import posConfig.posConfig;
-
 /**
  *
  * @author MIS
@@ -44,8 +43,6 @@ public class loginForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Workstation is not yet registered. Please contact administrator.");
             System.exit(0);
         }
-        
-        //transCreate.createTransHeaderXML();
     }
 
     /**
@@ -340,7 +337,7 @@ public class loginForm extends javax.swing.JFrame {
 
                                     //Create a transaction record
                                     transCreate.createTransHeader("Login", core.getAccountID());
-
+                                 
                                     new mainPOS().setVisible(true);
                                     dispose();
                                 }
@@ -356,7 +353,7 @@ public class loginForm extends javax.swing.JFrame {
                             username.requestFocus();
                         }
                     }
-                } catch (HeadlessException | IOException | InterruptedException e) {
+                }catch (HeadlessException | IOException | InterruptedException e) {
                     logs.logger.log(Level.SEVERE, "An exception error occured: ", e);
                 }
             }
