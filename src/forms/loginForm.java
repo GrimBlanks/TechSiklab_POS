@@ -32,7 +32,7 @@ public class loginForm extends javax.swing.JFrame {
         initComponents();
         loginBtn.setRippleColor(new Color(255, 255, 255));
         getContentPane().setBackground(new Color(204, 243, 255));
-        //sjdhf
+ 
 
         if (core.isWorkstationRegistered()) {
             if (!core.getLastSignedOn().isBlank()) {
