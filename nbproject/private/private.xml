@@ -2,6 +2,18 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/office/Documents/NetBeansProjects/TechSiklab_POS/src/classes/transactionClass.java</file>
+            <file>file:/C:/Users/office/Documents/NetBeansProjects/TechSiklab_POS/src/forms/busDateForm.java</file>
+            <file>file:/C:/Users/office/Documents/NetBeansProjects/TechSiklab_POS/src/classes/dbServerConnect.java</file>
+            <file>file:/C:/Users/office/Documents/NetBeansProjects/TechSiklab_POS/src/classes/databaseServerCore.java</file>
+            <file>file:/C:/Users/office/Documents/NetBeansProjects/TechSiklab_POS/src/classes/mainClass.java</file>
+            <file>file:/C:/Users/office/Documents/NetBeansProjects/TechSiklab_POS/src/forms/mainPOS.java</file>
+            <file>file:/C:/Users/office/Documents/NetBeansProjects/TechSiklab_POS/src/forms/loginForm.java</file>
+            <file>file:/C:/Users/office/Documents/NetBeansProjects/TechSiklab_POS/src/classes/databaseCore.java</file>
+            <file>file:/C:/Users/office/Documents/NetBeansProjects/TechSiklab_POS/src/classes/coreClass.java</file>
+            <file>file:/C:/Users/office/Documents/NetBeansProjects/TechSiklab_POS/src/posConfig/posConfig.java</file>
+            <file>file:/C:/Users/office/Documents/NetBeansProjects/TechSiklab_POS/src/classes/dbConnect.java</file>
+        </group>
     </open-files>
 </project-private>

@@ -4,6 +4,7 @@
  */
 package classes;
 
+import forms.mainPOS;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,8 +22,8 @@ public class coreClass {
     databaseCore dbCore = new databaseCore();
     logging logs = new logging();
     posConfig posCon = new posConfig();
-    String employeeID = null;
-    String accountID = null;
+    private static String employeeID = "";
+    private static String accountID = "";
 
     public boolean login(String username, String password) {
         boolean res = false;
@@ -45,6 +46,8 @@ public class coreClass {
             dbCore.closeConnection();
         } catch (IOException | SQLException e) {
             logs.logger.log(Level.SEVERE, "An exception occurred", e);
+        } finally {
+            logs.closeLogger();
         }
         return res;
     }
@@ -66,6 +69,8 @@ public class coreClass {
             dbCore.closeConnection();
         } catch (IOException | SQLException e) {
             logs.logger.log(Level.SEVERE, "An exception occurred", e);
+        } finally {
+            logs.closeLogger();
         }
         return res;
     }
@@ -86,6 +91,8 @@ public class coreClass {
             dbCore.closeConnection();
         } catch (IOException | SQLException e) {
             logs.logger.log(Level.SEVERE, "An exception occurred", e);
+        } finally {
+            logs.closeLogger();
         }
         return cashierName;
     }
@@ -116,6 +123,8 @@ public class coreClass {
             dbCore.closeConnection();
         } catch (IOException | NumberFormatException | SQLException e) {
             logs.logger.log(Level.SEVERE, "An exception occurred", e);
+        } finally {
+            logs.closeLogger();
         }
 
         return finalTran;
@@ -131,19 +140,27 @@ public class coreClass {
             dbCore.closeConnection();
         } catch (Exception e) {
             logs.logger.log(Level.SEVERE, "An exception occurred", e);
+        } finally {
+            logs.closeLogger();
         }
     }
 
     public void setSignedOff(String accountID, String times, String dates) {
         try {
+            threadClass threads = new threadClass();
             logs.setupLogger();
             String query = "UPDATE accountdetail "
                     + "SET signedOnTo = 0, dateSignedOff = '" + dates + "', timeSignedOff = '" + times + "' "
                     + "WHERE accountID = '" + accountID + "'";
             dbCore.executeUpdate(query);
+            threads.getAccountDetail(accountID);
+            mainPOS.isDeclared = false;
             dbCore.closeConnection();
+            this.accountID = "";
         } catch (Exception e) {
             logs.logger.log(Level.SEVERE, "An exception occurred", e);
+        } finally {
+            logs.closeLogger();
         }
     }
 
@@ -188,6 +205,8 @@ public class coreClass {
             dbCore.closeConnection();
         } catch (Exception e) {
             logs.logger.log(Level.SEVERE, "An exception occurred", e);
+        } finally {
+            logs.closeLogger();
         }
         return isSignedOn;
     }
@@ -212,6 +231,8 @@ public class coreClass {
             dbCore.closeConnection();
         } catch (Exception e) {
             logs.logger.log(Level.SEVERE, "An exception occurred", e);
+        } finally {
+            logs.closeLogger();
         }
         return accID;
     }
@@ -234,6 +255,8 @@ public class coreClass {
             dbCore.closeConnection();
         } catch (Exception e) {
             logs.logger.log(Level.SEVERE, "An exception occurred", e);
+        } finally {
+            logs.closeLogger();
         }
         return isRegistered;
     }
@@ -246,12 +269,29 @@ public class coreClass {
                     + "'" + posCon.getPosNumber() + "', '" + tranNo + "', '" + time + "', " + amount + ", '" + posCon.getStoreID() + "')";
             dbCore.execute(query);
             query = "UPDATE accountDetail "
-                    + "SET businessDate = ' ' "
+                    + "SET businessDate = '-1' "
                     + "WHERE accountID = '" + accountID + "' ";
             dbCore.executeUpdate(query);
             dbCore.closeConnection();
         } catch (Exception e) {
             logs.logger.log(Level.SEVERE, "An exception occurred", e);
+        } finally {
+            logs.closeLogger();
+        }
+    }
+
+    public void setCashierBusDate(String accountID, String busDate) {
+        try {
+            logs.setupLogger();
+            String query = "UPDATE accountDetail "
+                    + "SET businessDate = '" + busDate + "' "
+                    + "WHERE accountID = '" + accountID + "' ";
+            dbCore.executeUpdate(query);
+            dbCore.closeConnection();
+        } catch (Exception e) {
+            logs.logger.log(Level.SEVERE, "An exception occurred", e);
+        } finally {
+            logs.closeLogger();
         }
     }
 }

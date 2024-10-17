@@ -4,6 +4,8 @@
  */
 package forms;
 
+import classes.coreClass;
+import classes.transactionClass;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
@@ -19,9 +21,12 @@ import notification.Notification;
  */
 public class busDateForm extends javax.swing.JFrame {
 
+    coreClass core = new coreClass();
+    transactionClass transCreate = new transactionClass();
+
     public busDateForm() {
         initComponents();
-        getContentPane().setBackground(new Color(110,193,243));
+        getContentPane().setBackground(new Color(110, 193, 243));
         SimpleDateFormat sdf = new SimpleDateFormat("MMMMMM dd, YYYY");
         bzdate.setText(sdf.format(new Date()));
     }
@@ -164,6 +169,10 @@ public class busDateForm extends javax.swing.JFrame {
             // Print the result
 //             System.out.println(formattedDate); // Output: 2024-09-17
             mainPOS.businessDate = bzdate.getText();
+            mainPOS.finalBusDate = formattedDate;
+            core.setCashierBusDate(core.getAccountID(), formattedDate);
+            //Create a transaction record
+            transCreate.createTransHeader("Login", core.getAccountID());
             new mainPOS().setVisible(true);
             dispose();
         } catch (DateTimeParseException e) {

@@ -2,6 +2,8 @@ package classes;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,10 +11,11 @@ import java.util.logging.SimpleFormatter;
 
 public class logging {
 
-    // Create a Logger instance
-    public final Logger logger = Logger.getLogger(logging.class.getName());
+    public static final Logger logger = Logger.getLogger(logging.class.getName());
+    private static FileHandler fileHandler;
 
-    private final String LOG_FILE_PATH = "src/logs/error-log.txt";
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private final String LOG_FILE_PATH = "src/logs/error-log-" + sdf.format(new Date()) + ".txt";
 
     public void setupLogger() throws IOException {
         // Ensure the log directory exists
@@ -23,23 +26,17 @@ public class logging {
         }
 
         // Create a FileHandler to write logs to a file
-        FileHandler fileHandler;
-        if (logFile.exists()) {
-            // Append to the existing file
-            fileHandler = new FileHandler(LOG_FILE_PATH, true);
-        } else {
-            // Create a new file and write logs
-            fileHandler = new FileHandler(LOG_FILE_PATH);
-        }
-
-        // Create a SimpleFormatter to format the log messages
+        fileHandler = new FileHandler(LOG_FILE_PATH, true);
         SimpleFormatter formatter = new SimpleFormatter();
         fileHandler.setFormatter(formatter);
-
-        // Add the FileHandler to the logger
         logger.addHandler(fileHandler);
-
-        // Set the log level (optional)
         logger.setLevel(Level.ALL);
+    }
+
+    public void closeLogger() {
+        if (fileHandler != null) {
+            fileHandler.close();
+            logger.removeHandler(fileHandler);
+        }
     }
 }

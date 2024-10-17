@@ -4,7 +4,6 @@
  */
 package classes;
 
-import java.io.IOException;
 import java.sql.*;
 
 /**
@@ -19,9 +18,8 @@ public class databaseCore {
     String query = "";
     logging logs = new logging();
 
-    private void connect() throws IOException {
+    private void connect() {
         try {
-            logs.setupLogger();
             con = dbConnect.con();
             st = con.createStatement();
         } catch (SQLException e) {
@@ -34,6 +32,8 @@ public class databaseCore {
             rs.close();
         } catch (SQLException ex) {
             logs.logger.log(java.util.logging.Level.SEVERE, "An exception occurred", ex);
+        } finally {
+            logs.closeLogger();
         }
     }
 
@@ -45,8 +45,10 @@ public class databaseCore {
         try {
             connect();
             rs = st.executeQuery(query);
-        } catch (IOException | SQLException e) {
+        } catch (SQLException e) {
             logs.logger.log(java.util.logging.Level.SEVERE, "An exception occurred", e);
+        } finally {
+            logs.closeLogger();
         }
         return rs;
     }
@@ -55,8 +57,10 @@ public class databaseCore {
         try {
             connect();
             st.execute(query);
-        } catch (IOException | SQLException e) {
+        } catch (SQLException e) {
             logs.logger.log(java.util.logging.Level.SEVERE, "An exception occurred", e);
+        } finally {
+            logs.closeLogger();
         }
     }
 
@@ -64,8 +68,10 @@ public class databaseCore {
         try {
             connect();
             st.executeUpdate(query);
-        } catch (IOException | SQLException e) {
+        } catch (SQLException e) {
             logs.logger.log(java.util.logging.Level.SEVERE, "An exception occurred", e);
+        } finally {
+            logs.closeLogger();
         }
     }
 }

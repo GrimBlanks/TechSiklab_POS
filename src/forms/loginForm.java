@@ -6,6 +6,7 @@ package forms;
 
 import classes.coreClass;
 import classes.logging;
+import classes.threadClass;
 import classes.transactionClass;
 import java.awt.Color;
 import java.awt.HeadlessException;
@@ -17,12 +18,14 @@ import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import notification.Notification;
 import posConfig.posConfig;
+
 /**
  *
  * @author MIS
  */
 public class loginForm extends javax.swing.JFrame {
 
+    threadClass threads = new threadClass();
     coreClass core = new coreClass();
     logging logs = new logging();
     transactionClass transCreate = new transactionClass();
@@ -30,20 +33,8 @@ public class loginForm extends javax.swing.JFrame {
 
     public loginForm() {
         initComponents();
-        loginBtn.setRippleColor(new Color(255, 255, 255));
-        getContentPane().setBackground(new Color(204, 243, 255));
- 
-
-        if (core.isWorkstationRegistered()) {
-            if (!core.getLastSignedOn().isBlank()) {
-                username.setText(core.getLastSignedOn());
-                username.disable();
-                comment.setText("<html><center>Please sign off the current user. <br>Or you may continue.</center></html>");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Workstation is not yet registered. Please contact administrator.");
-            System.exit(0);
-        }
+        init();
+        initThreads();
     }
 
     /**
@@ -324,21 +315,21 @@ public class loginForm extends javax.swing.JFrame {
                             mainPOS.accID = core.getAccountID();
                             sleep(500);
                             try {
-                                if (busDate.isEmpty() || busDate.isBlank()) {
+                                if (busDate.equalsIgnoreCase("-1")) {
                                     new busDateForm().setVisible(true);
                                     dispose();
                                 } else {
                                     // Parse the date
                                     LocalDate date = LocalDate.parse(busDate);
-                                    
+
                                     // Format the date to the desired output
                                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
                                     String formattedDate = date.format(formatter);
                                     mainPOS.businessDate = formattedDate;
-
+                                    mainPOS.finalBusDate = busDate;
+//
                                     //Create a transaction record
                                     transCreate.createTransHeader("Login", core.getAccountID());
-                                 
                                     new mainPOS().setVisible(true);
                                     dispose();
                                 }
@@ -354,11 +345,46 @@ public class loginForm extends javax.swing.JFrame {
                             username.requestFocus();
                         }
                     }
-                }catch (HeadlessException | IOException | InterruptedException e) {
+                } catch (HeadlessException | IOException | InterruptedException e) {
                     logs.logger.log(Level.SEVERE, "An exception error occured: ", e);
+                } finally {
+                    logs.closeLogger();
                 }
             }
         };
         t.start();
+    }
+
+    private void init() {
+        loginBtn.setRippleColor(new Color(255, 255, 255));
+        getContentPane().setBackground(new Color(204, 243, 255));
+
+        if (core.isWorkstationRegistered()) {
+            if (!core.getLastSignedOn().isBlank()) {
+                username.setText(core.getLastSignedOn());
+                username.disable();
+                comment.setText("<html><center>Please sign off the current user. <br>Or you may continue.</center></html>");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Workstation is not yet registered. Please contact administrator.");
+            System.exit(0);
+        }
+    }
+
+    private void initThreads() {
+        Thread getAccDetails = new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        sleep(3500);
+                        threads.getAccountDetail(core.getAccountID());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+        getAccDetails.start();
     }
 }

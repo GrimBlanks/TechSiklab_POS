@@ -7,9 +7,11 @@ package forms;
 import UI.Button;
 import UI.TableCustom;
 import classes.coreClass;
+import classes.threadClass;
 import classes.transactionClass;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import static java.lang.Thread.sleep;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
@@ -19,15 +21,16 @@ import javax.swing.JOptionPane;
  */
 public class mainPOS extends javax.swing.JFrame {
 
+    threadClass threads = new threadClass();
     coreClass core = new coreClass();
     public static String cashName;
     public static String accID;
     public static String idClerk;
     public static String businessDate;
+    public static String finalBusDate;
     public static double cashierDeclareAmount;
     public static boolean isDeclared = false;
     transactionClass transCreate = new transactionClass();
-    Thread t;
 
     public mainPOS() {
         initComponents();
@@ -40,47 +43,8 @@ public class mainPOS extends javax.swing.JFrame {
         TableCustom.apply(jScrollPane1, TableCustom.TableType.MULTI_LINE);
 
         setExtendedState(MAXIMIZED_BOTH);
-        t = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while (!dateToday.getText().equals(bzDate.getText())) {
-                        // Set the color to red
-                        bzDate.setForeground(Color.RED);
-                        bzDate.repaint(); // Refresh the label
-                        Thread.sleep(1000); // Sleep for 1 second
 
-                        // Set the color to white
-                        bzDate.setForeground(Color.WHITE);
-                        bzDate.repaint(); // Refresh the label
-                        Thread.sleep(1000); // Sleep for 1 second
-                    }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Error");
-                }
-            }
-        };
-        t.start();
-
-        Thread second = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    while (true) {
-                        sleep(1000);
-                        if (isDeclared) {
-                            transCreate.createTransHeader("Declare", mainPOS.accID);
-                            dispose();
-                            new loginForm().setVisible(true);
-                            break;
-                        }
-                    }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Error");
-                }
-            }
-        };
-        second.start();
+        initThreads();
     }
 
     /**
@@ -894,5 +858,49 @@ public class mainPOS extends javax.swing.JFrame {
             dispose();
             new loginForm().setVisible(true);
         }
+    }
+
+    private void initThreads() {
+        Thread t = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (!dateToday.getText().equals(bzDate.getText())) {
+                        // Set the color to red
+                        bzDate.setForeground(Color.RED);
+                        bzDate.repaint(); // Refresh the label
+                        Thread.sleep(1000); // Sleep for 1 second
+
+                        // Set the color to white
+                        bzDate.setForeground(Color.WHITE);
+                        bzDate.repaint(); // Refresh the label
+                        Thread.sleep(1000); // Sleep for 1 second
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error");
+                }
+            }
+        };
+        t.start();
+
+        Thread second = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (true) {
+                        sleep(1000);
+                        if (isDeclared) {
+                            transCreate.createTransHeader("Declare", core.getAccountID());
+                            dispose();
+                            new loginForm().setVisible(true);
+                            break;
+                        }
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Error");
+                }
+            }
+        };
+        second.start();
     }
 }

@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package posConfig;
 
 import classes.databaseCore;
 import classes.logging;
 import java.sql.*;
 
-/**
- *
- * @author MIS
- */
 public class posConfig {
 
     private final int storeID = 1;
@@ -28,12 +20,10 @@ public class posConfig {
         return storeID;
     }
 
-
     public String getBusDate(String accountID) {
         String busDate = "";
 
         try {
-            logs.setupLogger();
             String query = "SELECT * "
                     + "FROM accountdetail ad "
                     + "JOIN accountheader ah "
@@ -49,6 +39,8 @@ public class posConfig {
             dbCore.closeConnection();
         } catch (Exception e) {
             logs.logger.log(java.util.logging.Level.SEVERE, "An exception occurred", e);
+        } finally {
+            logs.closeLogger();
         }
 
         return busDate;
