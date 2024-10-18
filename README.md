@@ -9,11 +9,8 @@ With CodeLoom_POS, businesses can easily process customer purchases, manage prod
 #### Pros
 
 - **User-Friendly Interface**: An intuitive layout that simplifies the sales process for cashiers.
-- **Sales Reporting**: Generate detailed reports on sales performance, helping businesses make informed decisions.
 - **Multi-User Support**: Allow multiple cashiers to operate the system simultaneously, enhancing productivity.
-- **Inventory Management**: Effectively tracks item stock levels, product details, and supplier information.
 
 #### Cons
 
 - **Limited Payment Methods**: Currently, the system supports only a few payment options, which may not meet all business needs.
-- **No File Handling**: The system does not support importing or exporting files, limiting data management options. Additionally, there is no backup mechanism in place, posing a risk of data loss if the database encounters issues.
