@@ -41,8 +41,8 @@ public class transactionClass {
 
                 try {
                     // Serialize the Transaction object to XML and save it to a file
-                    xmlMapper.writeValue(new File("src/transactions/" + mainPOS.finalBusDate + "/" + posCon.getStoreID() + "_"
-                            + posCon.getPosNumber() + "_" + tranNo + "_" + mainPOS.finalBusDate + "_" + times.replace(":", "-") + ".xml"), transaction);
+                    xmlMapper.writeValue(new File("src/transactions/" + dates + "/" + posCon.getStoreID() + "_"
+                            + posCon.getPosNumber() + "_" + tranNo + "_" + dates + "_" + times.replace(":", "-") + ".xml"), transaction);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -59,8 +59,8 @@ public class transactionClass {
 
                 try {
                     // Serialize the Transaction object to XML and save it to a file
-                    xmlMapper.writeValue(new File("src/transactions/" + mainPOS.finalBusDate + "/" + posCon.getStoreID() + "_"
-                            + posCon.getPosNumber() + "_" + tranNo + "_" + mainPOS.finalBusDate + "_" + times.replace(":", "-") + ".xml"), transaction);
+                    xmlMapper.writeValue(new File("src/transactions/" + dates + "/" + posCon.getStoreID() + "_"
+                            + posCon.getPosNumber() + "_" + tranNo + "_" + dates + "_" + times.replace(":", "-") + ".xml"), transaction);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -79,8 +79,8 @@ public class transactionClass {
 
                 try {
                     // Serialize the Transaction object to XML and save it to a file
-                    xmlMapper.writeValue(new File("src/transactions/" + mainPOS.finalBusDate + "/" + posCon.getStoreID() + "_"
-                            + posCon.getPosNumber() + "_" + tranNo + "_" + mainPOS.finalBusDate + "_" + times.replace(":", "-") + ".xml"), transaction);
+                    xmlMapper.writeValue(new File("src/transactions/" + dates + "/" + posCon.getStoreID() + "_"
+                            + posCon.getPosNumber() + "_" + tranNo + "_" + dates + "_" + times.replace(":", "-") + ".xml"), transaction);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

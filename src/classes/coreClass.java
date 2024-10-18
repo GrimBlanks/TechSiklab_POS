@@ -154,9 +154,7 @@ public class coreClass {
                     + "WHERE accountID = '" + accountID + "'";
             dbCore.executeUpdate(query);
             threads.getAccountDetail(accountID);
-            mainPOS.isDeclared = false;
             dbCore.closeConnection();
-            this.accountID = "";
         } catch (Exception e) {
             logs.logger.log(Level.SEVERE, "An exception occurred", e);
         } finally {

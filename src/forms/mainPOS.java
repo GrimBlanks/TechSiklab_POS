@@ -892,6 +892,7 @@ public class mainPOS extends javax.swing.JFrame {
                         if (isDeclared) {
                             transCreate.createTransHeader("Declare", core.getAccountID());
                             dispose();
+                            mainPOS.isDeclared = false;
                             new loginForm().setVisible(true);
                             break;
                         }
