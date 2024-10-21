@@ -2,14 +2,19 @@ package classes;
 
 import forms.loginForm;
 import java.io.File;
+import static java.lang.Thread.sleep;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class mainClass {
 
+    static threadClass threads = new threadClass();
+    static coreClass core = new coreClass();
+
     public static void main(String[] args) {
         new loginForm().setVisible(true);
         createTransFolderToday();
+        initThreads();
     }
 
     private static void createTransFolderToday() {
@@ -26,5 +31,21 @@ public class mainClass {
         if (!todayFolder.exists()) {
             todayFolder.mkdirs();
         }
+    }
+
+    private static void initThreads() {
+        Thread getAccDetails = new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        sleep(3500);
+                        threads.getAccountDetail(core.getAccountID());
+                    } catch (InterruptedException e) {
+                    }
+                }
+            }
+        };
+        getAccDetails.start();
     }
 }

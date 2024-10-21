@@ -6,7 +6,6 @@ package forms;
 
 import classes.coreClass;
 import classes.logging;
-import classes.threadClass;
 import classes.transactionClass;
 import java.awt.Color;
 import java.awt.HeadlessException;
@@ -25,7 +24,6 @@ import posConfig.posConfig;
  */
 public class loginForm extends javax.swing.JFrame {
 
-    threadClass threads = new threadClass();
     coreClass core = new coreClass();
     logging logs = new logging();
     transactionClass transCreate = new transactionClass();
@@ -34,7 +32,6 @@ public class loginForm extends javax.swing.JFrame {
     public loginForm() {
         initComponents();
         init();
-        initThreads();
     }
 
     /**
@@ -296,63 +293,56 @@ public class loginForm extends javax.swing.JFrame {
 
     private void login(String userName, String pass) {
         Notification panel = new Notification(this, null, Notification.Location.TOP_CENTER, "");
-        Thread t = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    logs.setupLogger();
+        try {
+            logs.setupLogger();
 
-                    String workstationSignedOn = core.checkIfSignedOn(userName);
+            String workstationSignedOn = core.checkIfSignedOn(userName);
 
-                    if (!workstationSignedOn.equalsIgnoreCase("" + posCon.getPosNumber()) && !workstationSignedOn.equalsIgnoreCase("0")) {
-                        JOptionPane.showMessageDialog(null, "You are logged on to workstation " + workstationSignedOn + ". Please sign off first on that workstation.");
-                        username.setText("");
-                        password.setText("");
-                    } else {
-                        if (core.login(userName, pass)) {
-                            String busDate = posCon.getBusDate(core.getAccountID());
-                            mainPOS.cashName = core.getCashierName();
-                            mainPOS.accID = core.getAccountID();
-                            sleep(500);
-                            try {
-                                if (busDate.equalsIgnoreCase("-1")) {
-                                    new busDateForm().setVisible(true);
-                                    dispose();
-                                } else {
-                                    // Parse the date
-                                    LocalDate date = LocalDate.parse(busDate);
-
-                                    // Format the date to the desired output
-                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
-                                    String formattedDate = date.format(formatter);
-                                    mainPOS.businessDate = formattedDate;
-                                    mainPOS.finalBusDate = busDate;
-//
-                                    //Create a transaction record
-                                    transCreate.createTransHeader("Login", core.getAccountID());
-                                    new mainPOS().setVisible(true);
-                                    dispose();
-                                }
-                            } catch (Exception e) {
-                                logs.logger.log(Level.SEVERE, "An exception error occured: ", e);
-                            }
+            if (!workstationSignedOn.equalsIgnoreCase("" + posCon.getPosNumber()) && !workstationSignedOn.equalsIgnoreCase("0")) {
+                JOptionPane.showMessageDialog(null, "You are logged on to workstation " + workstationSignedOn + ". Please sign off first on that workstation.");
+                username.setText("");
+                password.setText("");
+            } else {
+                if (core.login(userName, pass)) {
+                    String busDate = posCon.getBusDate(core.getAccountID());
+                    mainPOS.cashName = core.getCashierName();
+                    mainPOS.accID = core.getAccountID();
+                    try {
+                        if (busDate.equalsIgnoreCase("-1")) {
+                            new busDateForm().setVisible(true);
+                            dispose();
                         } else {
-                            panel.setType(Notification.Type.WARNING);
-                            panel.setMessage("Invalid Credentials. Please try again.");
-                            panel.showNotification();
-                            password.setText("");
-                            username.setText("");
-                            username.requestFocus();
+                            // Parse the date
+                            LocalDate date = LocalDate.parse(busDate);
+
+                            // Format the date to the desired output
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+                            String formattedDate = date.format(formatter);
+                            mainPOS.businessDate = formattedDate;
+                            mainPOS.finalBusDate = busDate;
+//
+                            //Create a transaction record
+                            transCreate.createTransHeader("Login", core.getAccountID());
+                            new mainPOS().setVisible(true);
+                            dispose();
                         }
+                    } catch (Exception e) {
+                        logs.logger.log(Level.SEVERE, "An exception error occured: ", e);
                     }
-                } catch (HeadlessException | IOException | InterruptedException e) {
-                    logs.logger.log(Level.SEVERE, "An exception error occured: ", e);
-                } finally {
-                    logs.closeLogger();
+                } else {
+                    panel.setType(Notification.Type.WARNING);
+                    panel.setMessage("Invalid Credentials. Please try again.");
+                    panel.showNotification();
+                    password.setText("");
+                    username.setText("");
+                    username.requestFocus();
                 }
             }
-        };
-        t.start();
+        } catch (HeadlessException | IOException e) {
+            logs.logger.log(Level.SEVERE, "An exception error occured: ", e);
+        } finally {
+            logs.closeLogger();
+        }
     }
 
     private void init() {
@@ -369,22 +359,5 @@ public class loginForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Workstation is not yet registered. Please contact administrator.");
             System.exit(0);
         }
-    }
-
-    private void initThreads() {
-        Thread getAccDetails = new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    try {
-                        sleep(3500);
-                        threads.getAccountDetail(core.getAccountID());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        };
-        getAccDetails.start();
     }
 }

@@ -1,0 +1,13 @@
+<Transaction xmlns="">
+    <header>
+        <transNumber>190</transNumber>
+        <businessDate>2024-10-21</businessDate>
+        <transType>Logout</transType>
+        <workstationNumber>2</workstationNumber>
+        <storeID>1</storeID>
+        <transDate>2024-10-21</transDate>
+        <endTime>08:51:59</endTime>
+        <accountID>1</accountID>
+    </header>
+    <details></details>
+</Transaction>
