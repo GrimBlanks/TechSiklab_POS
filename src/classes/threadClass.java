@@ -2,7 +2,6 @@ package classes;
 
 import java.sql.ResultSet;
 import java.util.logging.Level;
-import posConfig.posConfig;
 
 public class threadClass {
 
@@ -10,7 +9,6 @@ public class threadClass {
     databaseServerCore dbServCore = new databaseServerCore();
     ResultSet rs;
     logging logs = new logging();
-    posConfig posCon = new posConfig();
 
     public void getAccountDetail(String accountID) {
         //Get details from local db and put it in a single string separated by comma
@@ -26,7 +24,7 @@ public class threadClass {
                 if (rs.next()) {
                     accountDetails = rs.getString("signedOnTo") + "," + rs.getString("profileID") + "," + rs.getString("dateSignedOn") + "," + rs.getString("dateSignedOff") + ","
                             + rs.getString("timeSignedOff") + "," + rs.getString("timeSignedOn") + "," + rs.getString("businessDate");
-                    System.out.println(accountDetails);
+                    System.out.println(accountDetails + "------AccID: " + accountID);
                     updateServerAccDetails(accountDetails, accountID);
                 }
                 rs.close();

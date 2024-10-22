@@ -1,0 +1,5 @@
+classes.Transaction
+classes.TransDetail
+classes.TransactionXmlGenerator
+classes.TransHeader
+classes.TransactionXml

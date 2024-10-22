@@ -7,7 +7,6 @@ package forms;
 import UI.Button;
 import UI.TableCustom;
 import classes.coreClass;
-import classes.threadClass;
 import classes.transactionClass;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
@@ -21,7 +20,6 @@ import javax.swing.JOptionPane;
  */
 public class mainPOS extends javax.swing.JFrame {
 
-    threadClass threads = new threadClass();
     coreClass core = new coreClass();
     public static String cashName;
     public static String accID;
@@ -855,6 +853,7 @@ public class mainPOS extends javax.swing.JFrame {
         int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to sign off?", null, 0);
         if (option == 0) {
             transCreate.createTransHeader("Logout", accID);
+            core.setAccountID("");
             dispose();
             new loginForm().setVisible(true);
         }

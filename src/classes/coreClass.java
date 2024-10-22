@@ -1,10 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package classes;
 
-import forms.mainPOS;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,10 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import posConfig.posConfig;
 
-/**
- *
- * @author MIS
- */
+
 public class coreClass {
 
     ResultSet rs;
