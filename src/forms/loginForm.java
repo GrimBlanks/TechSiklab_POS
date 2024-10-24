@@ -67,11 +67,11 @@ public class loginForm extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("<html><center>CODELOOM<br>POS</center></html>");
+        jLabel1.setText("<html><center>TECHSIKLAB<br>POS</center></html>");
 
         imageAvatar1.setGradientColor1(new java.awt.Color(102, 102, 102));
         imageAvatar1.setGradientColor2(new java.awt.Color(102, 102, 102));
-        imageAvatar1.setImage(new javax.swing.ImageIcon(getClass().getResource("/images/logo.png"))); // NOI18N
+        imageAvatar1.setImage(new javax.swing.ImageIcon(getClass().getResource("/images/logo3.png"))); // NOI18N
 
         javax.swing.GroupLayout panelRound2Layout = new javax.swing.GroupLayout(panelRound2);
         panelRound2.setLayout(panelRound2Layout);

@@ -93,7 +93,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;CODELOOM&lt;br&gt;POS&lt;/center&gt;&lt;/html&gt;"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;TECHSIKLAB&lt;br&gt;POS&lt;/center&gt;&lt;/html&gt;"/>
           </Properties>
         </Component>
         <Container class="UI.ImageAvatar" name="imageAvatar1">
@@ -105,7 +105,7 @@
               <Color blue="66" green="66" red="66" type="rgb"/>
             </Property>
             <Property name="image" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/logo.png"/>
+              <Image iconType="3" name="/images/logo3.png"/>
             </Property>
           </Properties>
 
