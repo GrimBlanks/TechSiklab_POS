@@ -27,8 +27,7 @@ public class coreClass {
                     + "ON ah.accountID = ad.accountID "
                     + "WHERE ah.deletedOn IS NULL "
                     + "AND userName = '" + username + "' AND password = SHA2('" + password + "', 256) ";
-            dbCore.setQuery(query);
-            rs = dbCore.getResultSet();
+            rs = dbCore.getResultSet(query);
             if (rs.next()) {
                 res = true;
                 setEmployeeID(rs.getString("employeeID"));
@@ -52,8 +51,7 @@ public class coreClass {
                     + "FROM accountheader "
                     + "WHERE accountID = '" + clerkID + "' "
                     + "AND deletedOn IS NULL";
-            dbCore.setQuery(query);
-            rs = dbCore.getResultSet();
+            rs = dbCore.getResultSet(query);
             if (rs.next()) {
                 res = true;
             }
@@ -74,8 +72,7 @@ public class coreClass {
             String query = "SELECT employeeID, CONCAT(lastName, \", \",firstName, IFNULL(middleName, \" \"), IFNULL(suffix, \" \")) AS FullName "
                     + "FROM employees "
                     + "WHERE employeeID = '" + this.employeeID + "'";
-            dbCore.setQuery(query);
-            rs = dbCore.getResultSet();
+            rs = dbCore.getResultSet(query);
             if (rs.next()) {
                 cashierName = rs.getString("FullName");
             }
@@ -99,8 +96,7 @@ public class coreClass {
             String query = "SELECT COUNT(*) transNumber FROM transheader th "
                     + "WHERE th.storeID = '" + posCon.getStoreID() + "' "
                     + "AND th.workstationNumber = '" + posCon.getPosNumber() + "' ";
-            dbCore.setQuery(query);
-            rs = dbCore.getResultSet();
+            rs = dbCore.getResultSet(query);
             if (rs.next()) {
                 tranNo = rs.getString("transNumber");
                 finalTran = Integer.parseInt(tranNo);
@@ -186,8 +182,7 @@ public class coreClass {
                     + "WHERE ah.deletedOn IS NULL "
                     + "AND ad.userName = '" + username + "' "
                     + "AND signedOnTo != 0";
-            dbCore.setQuery(query);
-            rs = dbCore.getResultSet();
+            rs = dbCore.getResultSet(query);
             if (rs.next()) {
                 isSignedOn = rs.getString("ad.signedOnTo");
             }
@@ -212,8 +207,7 @@ public class coreClass {
                     + "WHERE ad.signedOnTo = " + posCon.getPosNumber() + " "
                     + "AND ah.storeID = " + posCon.getStoreID() + " "
                     + "AND ah.deletedOn IS NULL";
-            dbCore.setQuery(query);
-            rs = dbCore.getResultSet();
+            rs = dbCore.getResultSet(query);
             if (rs.next()) {
                 accID = rs.getString("userName");
             }
@@ -236,8 +230,7 @@ public class coreClass {
                     + "WHERE workstationNumber = " + posCon.getPosNumber() + " "
                     + "AND storeID = " + posCon.getStoreID() + " "
                     + "AND deletedOn IS NULL";
-            dbCore.setQuery(query);
-            rs = dbCore.getResultSet();
+            rs = dbCore.getResultSet(query);
             if (rs.next()) {
                 isRegistered = true;
             }

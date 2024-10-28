@@ -19,8 +19,7 @@ public class threadClass {
                 String query = "SELECT * "
                         + "FROM accountdetail "
                         + "WHERE accountID = '" + accountID + "' ";
-                dbCore.setQuery(query);
-                rs = dbCore.getResultSet();
+                rs = dbCore.getResultSet(query);
                 if (rs.next()) {
                     accountDetails = rs.getString("signedOnTo") + "," + rs.getString("profileID") + "," + rs.getString("dateSignedOn") + "," + rs.getString("dateSignedOff") + ","
                             + rs.getString("timeSignedOff") + "," + rs.getString("timeSignedOn") + "," + rs.getString("businessDate");

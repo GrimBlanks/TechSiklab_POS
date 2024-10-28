@@ -30,8 +30,7 @@ public class posConfig {
                     + "ON ah.accountID = ad.accountID "
                     + "WHERE ah.deletedOn IS NULL "
                     + "AND ad.accountID = '" + accountID + "' ";
-            dbCore.setQuery(query);
-            rs = dbCore.getResultSet();
+            rs = dbCore.getResultSet(query);
             if (rs.next()) {
                 busDate = rs.getString("ad.businessDate");
             }

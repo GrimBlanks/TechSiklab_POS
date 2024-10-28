@@ -37,11 +37,7 @@ public class databaseCore {
         }
     }
 
-    public void setQuery(String query) {
-        this.query = query;
-    }
-
-    public ResultSet getResultSet() {
+    public ResultSet getResultSet(String query) {
         try {
             connect();
             rs = st.executeQuery(query);
